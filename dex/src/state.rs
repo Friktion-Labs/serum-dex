@@ -23,7 +23,7 @@ use spl_token::error::TokenError;
 
 use crate::{
     critbit::Slab,
-    error::{DexErrorCode, DexResult, SourceFileId, DexError},
+    error::{DexError, DexErrorCode, DexResult, SourceFileId},
     fees::{self, FeeTier},
     instruction::{
         disable_authority, fee_sweeper, msrm_token, srm_token, CancelOrderInstructionV2,
@@ -532,7 +532,7 @@ impl MarketState {
     }
 
     #[inline]
-    fn load_fee_tier(
+    pub fn load_fee_tier(
         &self,
         expected_owner: &[u64; 4],
         srm_or_msrm_account: Option<account_parser::TokenAccount>,
@@ -2757,7 +2757,7 @@ impl State {
 
         // Amount that user deposits into the program
         let deposit_amount;
-        // Amount that user receives after the exchange 
+        // Amount that user receives after the exchange
         let withdraw_amount;
 
         // Token accounts for transfers
@@ -3066,7 +3066,7 @@ impl State {
                         }
                         return Err(err);
                     }
-                    _ => return Err(err)
+                    _ => return Err(err),
                 }
             }
         }
